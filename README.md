@@ -2,6 +2,8 @@
 
 InsightPilot is an interactive data analysis application built with Streamlit and Google Gemini. It uses a hybrid RAG pipeline (FAISS dense search + BM25 sparse search) to ground LLM prompts in actual dataset context before generating visualizations from natural language queries.
 
+![App Screenshot](images/streamlit_interface.png)
+
 ## Architecture
 
 - RAG Pipeline: dataset rows and column statistics are chunked, embedded using `all-MiniLM-L6-v2` (512-dim), and stored in a FAISS flat index. Queries use reciprocal rank fusion over FAISS and BM25 results to retrieve the top-5 most relevant chunks before prompting the LLM.
@@ -16,6 +18,8 @@ InsightPilot is an interactive data analysis application built with Streamlit an
 - 8 visualization types: histogram, bar, line, scatter, box, heatmap, pie, area
 - Transparent code display for every generated plot
 - RAG benchmark script to measure precision@5 and retrieval latency
+
+![Benchmark Screenshot](images/benchmarks.png)
 
 ## Tech Stack
 
