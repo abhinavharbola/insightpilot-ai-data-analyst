@@ -44,8 +44,14 @@ InsightPilot is an interactive data analysis application built with Streamlit an
 ```bash
 git clone https://github.com/abhinavharbola/insightpilot-ai-data-analyst
 cd insightpilot-ai-data-analyst
+```
+
+```bash
 python -m venv venv
 source venv/bin/activate        # Windows: venv\Scripts\activate
+```
+
+```bash
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
 ```
