@@ -9,6 +9,8 @@ Natural language analytics over CSV datasets using a hybrid RAG pipeline (FAISS 
 
 <br>
 
+---
+
 ## How it works
 
 User query → **FAISS dense search + BM25 sparse search** → Reciprocal rank fusion → Top-5 chunks → Gemini prompt → Python code → Rendered chart
