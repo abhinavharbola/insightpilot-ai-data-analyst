@@ -19,7 +19,7 @@ InsightPilot is an interactive data analysis application built with Streamlit an
 - Transparent code display for every generated plot
 - RAG benchmark script to measure precision@5 and retrieval latency
 
-![Benchmark Screenshot](images/benchmarks.png)
+<img src="images/benchmarks.png" width="300" height="200"/>
 
 ## Tech Stack
 
