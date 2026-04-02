@@ -1,83 +1,79 @@
-# InsightPilot: AI-Powered Data Analyst
+# InsightPilot — AI-Powered Data Analyst
 
-InsightPilot is an interactive data analysis application built with Streamlit and Google Gemini. It uses a hybrid RAG pipeline (FAISS dense search + BM25 sparse search) to ground LLM prompts in actual dataset context before generating visualizations from natural language queries.
+Natural language analytics over CSV datasets using a hybrid RAG pipeline and Google Gemini.
 
-![App Screenshot](images/streamlit_interface.png)
+<br>
 
-## Architecture
+<p align="center">
+  <img src="images/streamlit_interface.png" width="860" alt="InsightPilot Dashboard"/>
+</p>
 
-- RAG Pipeline: dataset rows and column statistics are chunked, embedded using `all-MiniLM-L6-v2` (512-dim), and stored in a FAISS flat index. Queries use reciprocal rank fusion over FAISS and BM25 results to retrieve the top-5 most relevant chunks before prompting the LLM.
-- LLM Engine: Google Gemini 2.5 Flash receives only the retrieved context, not the raw dataframe, which significantly reduces hallucinations on large datasets.
-- Visualization: the LLM generates Python code using matplotlib/seaborn, which is executed locally and rendered in the UI.
+<br>
 
-## Features
+## How it works
 
-- Natural language to visualization with end-to-end latency displayed per query
-- Hybrid retrieval (dense + sparse) with reciprocal rank fusion
-- Supports datasets with 50+ features and 100MB+ in size
-- 8 visualization types: histogram, bar, line, scatter, box, heatmap, pie, area
-- Transparent code display for every generated plot
-- RAG benchmark script to measure precision@5 and retrieval latency
+User query → **FAISS dense search + BM25 sparse search** → Reciprocal rank fusion → Top-5 chunks → Gemini prompt → Python code → Rendered chart
 
-<img src="images/benchmarks.png" width="300" height="200"/>
+Instead of passing raw dataframe context to the LLM, the RAG pipeline retrieves only the most relevant schema and statistical chunks per query — keeping prompts focused and reducing column name hallucinations.
 
-## Tech Stack
+---
 
-- Frontend: Streamlit
-- LLM: Google Generative AI (gemini-2.5-flash)
-- Embeddings: sentence-transformers (all-MiniLM-L6-v2)
-- Vector Store: FAISS (CPU)
-- Sparse Retrieval: BM25 (rank-bm25)
-- Data: Pandas, NumPy
-- Visualization: Matplotlib, Seaborn
+## Performance
 
-## Project Structure
-```
-├── app.py                  # Streamlit UI and session state
-├── utils.py                # InsightPilotAgent: RAG retrieval + LLM orchestration
-├── rag/
-│   ├── embedder.py         # Chunking, embedding, FAISS index construction
-│   └── retriever.py        # Hybrid search with reciprocal rank fusion
-├── eval/
-│   ├── benchmark.py        # Precision@5 and latency benchmarking
-│   └── queries.py          # 20 ground-truth query-column pairs
-└── requirements.txt
-```
+| Metric | Result |
+|---|---|
+| Precision@5 | 81% |
+| Retrieval latency | 9.3ms avg |
+| End-to-end query response | < 500ms |
+| Dataset | 9,800 rows · 18 features |
 
-## Installation
+---
+
+## Stack
+
+`Streamlit` · `Gemini 2.5 Flash` · `sentence-transformers` · `FAISS (CPU)` · `BM25` · `Pandas` · `Matplotlib` · `Seaborn`
+
+---
+
+## Setup
+
 ```bash
 git clone https://github.com/abhinavharbola/insightpilot-ai-data-analyst
 cd insightpilot-ai-data-analyst
-```
-
-```bash
-python -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
-```
-
-```bash
+python -m venv venv && source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
+streamlit run app.py --server.fileWatcherType none
 ```
 
-## Usage
+Get a free Gemini API key at [Google AI Studio](https://aistudio.google.com/), enter it in the sidebar, upload a CSV, and start querying.
+
+---
+
+## Benchmark
+
 ```bash
-streamlit run app.py
+python -m eval.benchmark --csv your_dataset.csv
 ```
 
-1. Enter your Gemini API key in the sidebar (get one free at [Google AI Studio](https://aistudio.google.com/))
-2. Upload a CSV file
-3. Wait for the RAG index to build, then ask questions in the chat
+<p align="center">
+  <img src="images/benchmarks.png" width="620" alt="Benchmark Results"/>
+</p>
 
-## Running the Benchmark
-```bash
-python -m eval.benchmark --csv path/to/your/dataset.csv
+Update `eval/queries.py` with your dataset's actual column names before running.
+
+---
+
+## Structure
+
 ```
-
-Outputs precision@5 and average retrieval latency across 20 canonical query patterns. Update `eval/queries.py` with column names matching your dataset before running.
-
-## Notes
-
-- No GPU required. All embedding and retrieval runs on CPU.
-- The index is rebuilt each time a new file is uploaded. For very large datasets (500MB+) this may take 30-60 seconds.
-- Replace the ground-truth keywords in `eval/queries.py` with actual column names from your dataset before benchmarking.
+├── app.py              # Streamlit UI
+├── utils.py            # RAG retrieval + LLM orchestration
+├── rag/
+│   ├── embedder.py     # Chunking, embedding, FAISS index
+│   └── retriever.py    # Hybrid search + RRF fusion
+├── eval/
+│   ├── benchmark.py    # Precision@5 + latency eval
+│   └── queries.py      # 18 ground-truth query-column pairs
+└── requirements.txt
+```
