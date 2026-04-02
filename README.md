@@ -1,13 +1,10 @@
 # InsightPilot: AI-Powered Data Analyst
 
 Natural language analytics over CSV datasets using a hybrid RAG pipeline (FAISS dense + BM25 sparse) and Google Gemini.
-<br>
 
 <p align="center">
   <img src="images/streamlit_interface.png" width="860" alt="InsightPilot Dashboard"/>
 </p>
-
-<br>
 
 ---
 
