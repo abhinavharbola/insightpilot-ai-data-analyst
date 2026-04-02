@@ -13,7 +13,7 @@ Natural language analytics over CSV datasets using a hybrid RAG pipeline (FAISS 
 
 User query → **FAISS dense search + BM25 sparse search** → Reciprocal rank fusion → Top-5 chunks → Gemini prompt → Python code → Rendered chart
 
-Instead of passing raw dataframe context to the LLM, the RAG pipeline retrieves only the most relevant schema and statistical chunks per query — keeping prompts focused and reducing column name hallucinations.
+Instead of passing raw dataframe context to the LLM, the RAG pipeline retrieves only the most relevant schema and statistical chunks per query, keeping prompts focused and reducing column name hallucinations.
 
 ---
 
@@ -39,9 +39,12 @@ Instead of passing raw dataframe context to the LLM, the RAG pipeline retrieves 
 ```bash
 git clone https://github.com/abhinavharbola/insightpilot-ai-data-analyst
 cd insightpilot-ai-data-analyst
+
 python -m venv venv && source venv/bin/activate  # Windows: venv\Scripts\activate
+
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
+
 streamlit run app.py --server.fileWatcherType none
 ```
 
