@@ -10,7 +10,7 @@ Natural language analytics over CSV datasets using a hybrid RAG pipeline (FAISS 
 
 ## How it works
 
-User query → **FAISS dense search + BM25 sparse search** → Reciprocal rank fusion → Top-5 chunks → Gemini prompt → Python code → Rendered chart
+`User query` → **`FAISS dense search`** + **`BM25 sparse search`** → `Reciprocal rank fusion` → `Top-5 chunks` → `Gemini prompt` → `Python code` → `Rendered chart`
 
 Instead of passing raw dataframe context to the LLM, the RAG pipeline retrieves only the most relevant schema and statistical chunks per query, keeping prompts focused and reducing column name hallucinations.
 
