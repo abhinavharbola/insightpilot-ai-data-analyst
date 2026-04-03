@@ -29,7 +29,7 @@ Instead of passing raw dataframe context to the LLM, the RAG pipeline retrieves 
 
 ## Stack
 
-`Streamlit` · `Gemini 2.5 Flash` · `sentence-transformers` · `FAISS (CPU)` · `BM25` · `Pandas` · `Matplotlib` · `Seaborn`
+`Streamlit` · `Gemini 2.5 Flash` · `sentence-transformers` · `FAISS (CPU)` · `BM25` · `Matplotlib` · `Seaborn` · `Pandas`
 
 ---
 
@@ -68,13 +68,13 @@ Update `eval/queries.py` with your dataset's actual column names before running.
 ## Structure
 
 ```
-├── app.py              # Streamlit UI
+├── app.py              # Streamlit Interface
 ├── utils.py            # RAG retrieval + LLM orchestration
 ├── rag/
-│   ├── embedder.py     # Chunking, embedding, FAISS index
+│   ├── embedder.py     # Chunking, embedding + FAISS index
 │   └── retriever.py    # Hybrid search + RRF fusion
 ├── eval/
 │   ├── benchmark.py    # Precision@5 + latency eval
-│   └── queries.py      # 18 ground-truth query-column pairs
+│   └── queries.py      # (ground-truth) query-column pairs
 └── requirements.txt
 ```
