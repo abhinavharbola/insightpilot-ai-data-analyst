@@ -3,7 +3,7 @@
 Natural language analytics over CSV datasets using a hybrid RAG pipeline (FAISS dense + BM25 sparse) and Google Gemini.
 
 <p align="center">
-  <img src="images/streamlit_interface.png" width="860" alt="InsightPilot Dashboard"/>
+  <img src="images/streamlit_interface.png" width="800" alt="InsightPilot Dashboard"/>
 </p>
 
 ---
@@ -58,7 +58,7 @@ python -m eval.benchmark --csv your_dataset.csv
 ```
 
 <p align="center">
-  <img src="images/benchmarks.png" width="620" alt="Benchmark Results"/>
+  <img src="images/benchmarks.png" width="500" alt="Benchmark Results"/>
 </p>
 
 Update `eval/queries.py` with your dataset's actual column names before running.
